@@ -23,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool authenticationRequired = false;
   bool uploading = false;
   bool showHiddenFiles = false;
+  bool zip = false;
   String? username;
   String? password;
   String colorScheme = 'squirrel';
@@ -114,6 +115,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           onChanged: (value) {
                             setState(() {
                               uploading = value;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 16.0),
+                        const Text('Zip Files'),
+                        Switch(
+                          value: zip,
+                          onChanged: (value) {
+                            setState(() {
+                              zip = value;
                             });
                           },
                         ),
@@ -224,6 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     showQRCode,
                     authenticationRequired,
                     uploading,
+                    zip,
                     username,
                     password,
                     showHiddenFiles,
@@ -275,6 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
     bool showQRCode,
     bool authenticationRequired,
     bool uploading,
+    bool zip,
     String? username,
     String? password,
     bool showHiddenFiles,
@@ -317,6 +330,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     if (showHiddenFiles) {
       args.add('--hidden');
+    }
+    if (zip) {
+      args.add('--enable-zip');
     }
     if (colorScheme != 'squirrel') {
       env['MINISERVE_COLOR_SCHEME'] = colorScheme;
