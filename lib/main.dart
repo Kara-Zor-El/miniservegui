@@ -27,6 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String? username;
   String? password;
   String colorScheme = 'squirrel';
+  static int? runPid;
   static bool dialogShown = false;
   static List<String> supportedImageFormats = [
     "jpg",
@@ -42,6 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
     "webp",
     "exr",
   ];
+
+  // when the app is closed, make sure to kill miniserve
+  @override
+  void dispose() {
+    Process.killPid(runPid!);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -360,6 +368,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
       if (ip.isNotEmpty && !dialogShown) {
         dialogShown = true;
+        runPid = process.pid;
         showDialog(
           context: context,
           builder: (context) {
