@@ -27,6 +27,20 @@ class _MyHomePageState extends State<MyHomePage> {
   String? password;
   String colorScheme = 'squirrel';
   static bool dialogShown = false;
+  static List<String> supportedImageFormats = [
+    "jpg",
+    "jpeg",
+    "png",
+    "gif",
+    "bmp",
+    "tiff",
+    "tga",
+    "pvr",
+    "ico",
+    "psd",
+    "webp",
+    "exr",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +68,19 @@ class _MyHomePageState extends State<MyHomePage> {
                           const Text('Selected File or Folder:'),
                           const SizedBox(height: 16.0),
                           Text(path!),
+                          // check if image of supported format (supportedImageFormats)
+                          if (supportedImageFormats.contains(
+                              path!.split('.').last.toLowerCase())) ...[
+                            const SizedBox(height: 16.0),
+                            Image.file(File(path!)),
+                          ],
                         ],
                       ],
                     ),
                   ),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: ListView(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text('Settings',
                             style: TextStyle(
